@@ -1,0 +1,42 @@
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.8;
+abstract contract ERC20_STD{
+    function name() public view virtual returns (string memory);
+    function symbol() public view  virtual returns (string memory);
+    function decimals() public view virtual  returns (uint8);
+    function totalSupply() public view virtual returns (uint256);
+    function balanceOf(address _owner) public view virtual returns (uint256 balance);
+    function transfer(address _to, uint256 _value) public virtual returns (bool success);
+    function transferFrom(address _from, address _to, uint256 _value) public virtual  returns (bool success);
+    function approve(address _spender, uint256 _value) public virtual  returns (bool success);
+    function allowance(address _owner, address _spender) public view virtual  returns (uint256 remaining);
+
+
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    event Approval(address indexed _owner, address indexed _spender, uint256 _value);
+
+}
+
+contract Onwership{
+
+    address public contractOwner;//the one who is gonna deploy
+    address public newOwner; //To whom ownership will be handed oved
+
+    event TransferOwnership(address indexed contractOwner, address indexed newOwner);
+    constructor(){
+        contractOwner = msg.sender;
+    }
+
+    function changeOwnership(address _to) public {
+        require(contractOwner == msg.sender, "Only contract owner can transfer the ownership");
+        newOwner = _to;//setting input address as the new owner
+        contractOwner = newOwner; //handing over ownerhsip to new owner
+        newOwner = address(0);
+        emit TransferOwnership(msg.sender, _to);
+    }
+
+    // function acceptOwner() public {
+    //     require(msg.sender == newOwner, "Only new assigned onwer can call it");
+    //     contractOwner = newOwner;
+    // }
+}
