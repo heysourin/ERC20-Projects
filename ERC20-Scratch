@@ -40,3 +40,24 @@ contract Onwership{
     //     contractOwner = newOwner;
     // }
 }
+
+abstract contract MyToken is ERC20_STD, Onwership{
+
+    string public _name;
+    string public _symbol;
+    string public _decimals;
+    uint public _totalSupply;
+
+    address public _minter;
+
+    constructor(address minter_){
+        _name = 'XENON';
+        _symbol = 'XNN';
+        _totalSupply = 10000000;
+        _minter = minter_;
+    }
+    // function name() public view virtual returns (string memory);
+    // function symbol() public view  virtual returns (string memory);
+    // function decimals() public view virtual  returns (uint8);
+    // function totalSupply() public view virtual returns (uint256);
+}
